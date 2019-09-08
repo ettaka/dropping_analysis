@@ -71,9 +71,10 @@ parser = argparse.ArgumentParser(description='Analyse a dropping object')
 parser.add_argument('-sp', '--show-plot', action='store_true', default=False) 
 args = parser.parse_args()
 
+add_data('marble.txt', plot_tol=1e-1)
 add_data('lego_ball.txt', t0=0.8, t1=1.129, plot_tol=1)
-add_data('ping_pong_ball.txt', t0=0.32, t1=0.78, plot_tol=1)
 add_data('foil_ball.txt', t0=0.7, t1=1.06)
+add_data('ping_pong_ball.txt', t0=0.32, t1=0.78, plot_tol=1)
 
 results=[]
 plotname='fig'
