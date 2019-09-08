@@ -32,6 +32,9 @@ def drop_fit(data):
     data['fit']['a'] = 2 * fit[0]
     data['fit']['poly1d'] = np.poly1d(data['fit']['function'])
 
+    data['fit']['t_0'] = -fit[1]/data['fit']['a']
+    data['fit']['x_0'] = data['fit']['poly1d'](data['fit']['t_0'])
+
     return fit, name
 
 def plot_fit(data):
@@ -42,9 +45,9 @@ def plot_fit(data):
     plot_data = plot_data[np.abs(plot_data[:,1]-plot_data[:,2])/plot_data[:,2]<tol]
 
     if True:
-        data_t = plot_data[:,0]
-        data_x = plot_data[:,1]
-        data_x_fit = plot_data[:,2]
+        data_t = plot_data[:,0]-data['fit']['t_0']
+        data_x = plot_data[:,1]-data['fit']['x_0']
+        data_x_fit = plot_data[:,2]-data['fit']['x_0']
     else:
         data_t = data['t']
         data_x = data['x']
@@ -81,7 +84,7 @@ for data in data_list:
     print data['name']+"\t{:2.2f}".format(data['fit']['a'])
     plotname+='_'+data['filename'].split('.')[0]
 
-plt.legend()
+plt.legend(loc='best')
 plt.grid()
 if args.show_plot:
     plt.show()
